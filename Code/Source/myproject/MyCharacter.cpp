@@ -55,27 +55,21 @@ AMyCharacter::AMyCharacter()
 // Called to bind functionality to input
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-    // Set up gameplay key bindings
     check(PlayerInputComponent);
-    PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-    PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-
+    
     PlayerInputComponent->BindAxis("Move Forward / Backward", this, &AMyCharacter::MoveForward);
     PlayerInputComponent->BindAxis("Move Right / Left", this, &AMyCharacter::MoveRight);
-
-    // We have 2 versions of the rotation bindings to handle different kinds of devices differently
-    // "turn" handles devices that provide an absolute delta, such as a mouse.
-    // "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
+    
     PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this, &APawn::AddControllerYawInput);
     PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
 
+    PlayerInputComponent->BindAction("SwitchChar", IE_Pressed, this, &ACharacter::Jump);
+    
     // handle touch devices
     PlayerInputComponent->BindTouch(IE_Pressed, this, &AMyCharacter::TouchStarted);
     PlayerInputComponent->BindTouch(IE_Released, this, &AMyCharacter::TouchStopped);
 
-    // Boost Speed
-    PlayerInputComponent->BindAction("BoostSpeed", IE_Pressed, this, &AMyCharacter::BoostSpeed);
-    PlayerInputComponent->BindAction("BoostSpeed", IE_Released, this, &AMyCharacter::RemoveSpeedBoost);
+    
 }
 
 void AMyCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)

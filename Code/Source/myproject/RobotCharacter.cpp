@@ -3,3 +3,9 @@
 
 #include "RobotCharacter.h"
 
+void ARobotCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+}
+

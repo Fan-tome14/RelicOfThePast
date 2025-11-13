@@ -13,5 +13,6 @@ UCLASS()
 class MYPROJECT_API AHumanCharacter : public AMyCharacter
 {
 	GENERATED_BODY()
-	
+protected:
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 };
