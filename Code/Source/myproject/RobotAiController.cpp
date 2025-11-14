@@ -3,6 +3,8 @@
 
 #include "RobotAiController.h"
 
+#include "RobotCharacter.h"
+
 
 // Sets default values
 ARobotAiController::ARobotAiController()
@@ -11,16 +13,33 @@ ARobotAiController::ARobotAiController()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-// Called when the game starts or when spawned
-void ARobotAiController::BeginPlay()
+// Dans RobotAiController.cpp
+
+void ARobotAiController::OnPossess(APawn* InPawn)
 {
-	Super::BeginPlay();
-	
+	Super::OnPossess(InPawn);
+    
+	ARobotCharacter* RobotCharacter = Cast<ARobotCharacter>(InPawn);
+	if (RobotCharacter && RobotCharacter->BehaviorTree)
+	{
+		// Démarre l'exécution du Behavior Tree
+		if (RobotCharacter->BehaviorTree->BlackboardAsset)
+		{
+			UseBlackboard(RobotCharacter->BehaviorTree->BlackboardAsset, BlackboardComponent);
+			RunBehaviorTree(RobotCharacter->BehaviorTree);
+		}
+	}
 }
 
-// Called every frame
-void ARobotAiController::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
+// Dans RobotAiController.cpp
 
+void ARobotAiController::OnUnPossess()
+{
+	Super::OnUnPossess();
+    
+	// STOPPER le Behavior Tree immédiatement
+	if (BehaviorTreeComponent && BehaviorTreeComponent->IsRunning())
+	{
+		BehaviorTreeComponent->StopTree();
+	}
+}

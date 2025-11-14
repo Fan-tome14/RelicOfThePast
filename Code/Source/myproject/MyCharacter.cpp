@@ -62,8 +62,6 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
     
     PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this, &APawn::AddControllerYawInput);
     PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
-
-    PlayerInputComponent->BindAction("SwitchChar", IE_Pressed, this, &ACharacter::Jump);
     
     // handle touch devices
     PlayerInputComponent->BindTouch(IE_Pressed, this, &AMyCharacter::TouchStarted);

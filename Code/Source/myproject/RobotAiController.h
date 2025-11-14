@@ -3,23 +3,39 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Runtime/AIModule/Classes/AIController.h"
+#include "AIController.h"
+// Headers nécessaires pour les composants Behavior Tree et Blackboard
+#include "BehaviorTree/BehaviorTreeComponent.h" 
+#include "BehaviorTree/BlackboardComponent.h"
 #include "RobotAiController.generated.h"
+
+class ARobotCharacter; 
 
 UCLASS()
 class MYPROJECT_API ARobotAiController : public AAIController
 {
 	GENERATED_BODY()
-
+    
 public:
-	// Sets default values for this actor's properties
 	ARobotAiController();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:
-	// Called every frame
+    
+	// Le Tick est essentiel pour mettre à jour la cible du Behavior Tree
 	virtual void Tick(float DeltaTime) override;
+    
+protected:
+	// Surcharges des événements de possession automatiques
+	virtual void OnPossess(APawn* InPawn) override;
+	virtual void OnUnPossess() override;
+    
+private:
+	// Les composants de l'IA
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	UBlackboardComponent* BlackboardComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	UBehaviorTreeComponent* BehaviorTreeComponent;
+    
+	// Nom de la clé qui stocke la référence du joueur dans le Blackboard
+	UPROPERTY(EditAnywhere, Category = "AI")
+	FName TargetActorKey = "TargetActor";
 };
