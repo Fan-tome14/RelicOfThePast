@@ -19,9 +19,6 @@ class MYPROJECT_API ARobotAiController : public AAIController
 public:
 	ARobotAiController();
     
-	// Le Tick est essentiel pour mettre à jour la cible du Behavior Tree
-	virtual void Tick(float DeltaTime) override;
-    
 protected:
 	// Surcharges des événements de possession automatiques
 	virtual void OnPossess(APawn* InPawn) override;
