@@ -13,7 +13,6 @@ ARobotAiController::ARobotAiController()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-// Dans RobotAiController.cpp
 
 void ARobotAiController::OnPossess(APawn* InPawn)
 {
@@ -31,13 +30,11 @@ void ARobotAiController::OnPossess(APawn* InPawn)
 	}
 }
 
-// Dans RobotAiController.cpp
 
 void ARobotAiController::OnUnPossess()
 {
 	Super::OnUnPossess();
     
-	// STOPPER le Behavior Tree immédiatement
 	if (BehaviorTreeComponent && BehaviorTreeComponent->IsRunning())
 	{
 		BehaviorTreeComponent->StopTree();

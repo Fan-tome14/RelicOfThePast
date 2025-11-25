@@ -40,8 +40,6 @@ void AHumanCharacter::ToggleRobotFollowing()
             	bool bCurrentValue = BlackboardComp->GetValueAsBool(KeyName);
                 bool bNewValue = !bCurrentValue;
             	BlackboardComp->SetValueAsBool(KeyName, bNewValue);
-
-                UE_LOG(LogTemp, Warning, TEXT("Robot Follow status toggled to: %s"), bNewValue ? TEXT("TRUE") : TEXT("FALSE"));
             }
         }
     }
